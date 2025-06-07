@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kidney Cancer Detection</title>
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _external=True) }}">
+
+  <!-- <script src="script.js"></script> -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">KIDNEY</div>
+      <div class="menu">
+        <a href="{{ url_for('open') }}">Home</a> <!-- Points to Home Page -->
+        <a href="{{ url_for('login') }}">Login</a> <!-- Points to the Login Page -->
+        <!-- <a href="{{ url_for('signup') }}">Signup</a> -->
+
+      </div>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="hero-section">
+      <div class="content">
+        <h1>KIDNEY CANCER DETECTION USING DEEP LEARNING</h1>
+      </div>
+      <div class="background">
+        <!-- <img src="kidneycancer.jpeg" alt="Kidney illustration"> -->
+        <img src="{{ url_for('static', filename='kidneycancer.jpeg') }}" alt="Kidney illustration">
+
+      </div>
+    </div>
+  </main>
+  
+</body>
+</html>
+
+
+

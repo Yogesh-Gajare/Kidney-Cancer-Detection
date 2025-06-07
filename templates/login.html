@@ -1,0 +1,51 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Cancer Detection - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylel.css') }}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">KIDNEY</div>
+            <div class="menu">
+                <a href="{{ url_for('open') }}">Home</a>
+                <a href="{{ url_for('login') }}">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                </div>
+                <button type="submit">Login</button>
+
+                <p class="signup-link">
+                    Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a>
+                </p>
+            </form>
+
+            <!-- Message display for errors/success -->
+            <div id="message" style="margin-top: 10px;"></div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+</body>
+
+</html>

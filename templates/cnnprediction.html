@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kidney Cancer Detection - Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='cnnpredicts.css', _external=True) }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>KIDNEY CANCER DETECTION</h1>
+      <div class="menu">
+        <a href="{{ url_for('open') }}">Home</a>
+        <a href="{{ url_for('data') }}">Upload Data</a>
+        <a href="{{ url_for('login') }}">Logout</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="prediction-section">
+      <h2>Uploaded Image</h2>
+
+      <!-- Placeholder for the uploaded image -->
+      <div class="image-container">
+        <img id="uploadedImage" src="" alt="Uploaded Image" style="max-width: 100%; height: 300px;">
+      </div>
+
+
+      <!-- Prediction Button -->
+      <button id="predictBtn">Get Prediction</button>
+
+      <div id="predictionResult" style="margin-top: 20px; display: none;">
+        <h3>Prediction Result:</h3>
+        <p id="predictionText">The result will be displayed here.</p>
+
+        <!-- Optional: Show additional database info if available -->
+        <div id="databaseInfo"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='cnnprediction.js') }}"></script>
+</body>
+</html>
