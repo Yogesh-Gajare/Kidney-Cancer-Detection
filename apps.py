@@ -95,25 +95,24 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Suppress TensorFlow warnings
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
 # Flask app setup
-app = Flask(__name__, template_folder="templates", static_folder="static")
-app.secret_key = 'your_secret_key'
+app = Flask(_name_, template_folder="templates", static_folder="static")
+app.secret_key = 'your_secret_key'  # Change this in production!
 
-# MongoDB connection
+# MongoDB connection (for user authentication)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/kidneyDB"
 mongo = PyMongo(app)
 
-# Paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Directories and paths
+BASE_DIR = os.path.dirname(os.path.abspath(_file_))
 
+# ANN model & preprocessors paths
 ANN_MODEL_PATH = os.path.join(BASE_DIR, "kidney_cancer_ann_model.h5")
 SCALER_PATH = os.path.join(BASE_DIR, "scaler.pkl")
 ENCODER_PATH = os.path.join(BASE_DIR, "label_encoders.pkl")
 DATASET_PATH = os.path.join(BASE_DIR, "kidney_cancer_filtered_dataset.csv")
 
+# CNN model paths
 CNN_MODEL_PATH = os.path.join(BASE_DIR, "kidney_cancer_model.h5")
 CNN_CSV_PATH = os.path.join(BASE_DIR, "kidneyData_filtered.csv")
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
@@ -124,7 +123,7 @@ try:
     if not all(os.path.exists(path) for path in [ANN_MODEL_PATH, SCALER_PATH, ENCODER_PATH, DATASET_PATH]):
         raise FileNotFoundError("One or more required ANN files are missing.")
 
-    ann_model = tf.keras.models.load_model(ANN_MODEL_PATH, compile=False)
+    ann_model = tf.keras.models.load_model(ANN_MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
     label_encoders = joblib.load(ENCODER_PATH)
     ann_df = pd.read_csv(DATASET_PATH)
@@ -150,10 +149,10 @@ except Exception as e:
     print(f"❌ Error loading CNN model or dataset: {e}")
     cnn_model, cnn_df = None, None
 
-# --- Routes ---
+# --- User Authentication Routes from first script ---
 
 @app.route('/')
-@app.route('/open')
+@app.route('/open')  # renamed from 'open' to avoid conflict with built-in
 def open():
     return render_template('open.html')
 
@@ -174,6 +173,7 @@ def signup():
             return jsonify({'success': False, 'message': 'Username already exists'})
 
         hashed_password = generate_password_hash(password)
+
         mongo.db.users.insert_one({
             'fullname': fullname,
             'email': email,
@@ -205,8 +205,11 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+# --- Routes to render templates from all scripts ---
+
 @app.route('/upload')
 def upload():
+    # Protect upload page - user must be logged in
     if 'username' not in session:
         return redirect(url_for('login'))
     return render_template('upload.html')
@@ -224,6 +227,7 @@ def cnnprediction():
     return render_template('cnnprediction.html')
 
 # --- ANN Prediction Route ---
+
 @app.route('/annpredict', methods=['POST'])
 def ann_predict():
     if not ann_model or not scaler or not label_encoders:
@@ -237,10 +241,12 @@ def ann_predict():
         if not data:
             return jsonify({"error": "No input data provided"}), 400
 
+        # Check for missing features
         missing_features = [feature for feature in ann_features if feature not in data]
         if missing_features:
             return jsonify({"error": f"Missing features: {missing_features}"}), 400
 
+        # Map categorical Yes/No to 1/0
         categorical_mappings = {"Yes": 1, "No": 0}
         categorical_cols = ['htn', 'dm']
 
@@ -248,6 +254,7 @@ def ann_predict():
             if col in data and data[col] in categorical_mappings:
                 data[col] = categorical_mappings[data[col]]
 
+        # Label encode categorical columns
         for col, encoder in label_encoders.items():
             if col in data and isinstance(data[col], str):
                 try:
@@ -255,6 +262,7 @@ def ann_predict():
                 except ValueError:
                     return jsonify({"error": f"Invalid value '{data[col]}' for feature '{col}'"}), 400
 
+        # Prepare data for prediction
         input_data = np.array([data[feature] for feature in ann_features]).reshape(1, -1)
         input_data = scaler.transform(input_data)
 
@@ -267,6 +275,7 @@ def ann_predict():
         return jsonify({"error": str(e)}), 500
 
 # --- CNN Prediction Route ---
+
 def predict_cnn_image(image):
     img_size = (128, 128)
     img = image.resize(img_size)
@@ -279,6 +288,7 @@ def predict_cnn_image(image):
 
     if predicted_class in cnn_df['Class'].values:
         info = cnn_df[cnn_df['Class'] == predicted_class].iloc[0].to_dict()
+        # Remove unwanted keys
         for field in ['Unnamed: 0', 'full_path', 'image_id', 'path', 'target']:
             info.pop(field, None)
     else:
@@ -309,5 +319,9 @@ def predict_cnn():
         return jsonify({"error": f"Prediction failed: {e}"}), 500
 
 # --- Main ---
-if __name__ == '__main__':
+
+#if _name_ == '_main_':
+#   app.run(debug=True)
+if _name_ == '_main_':
+   # app.run(debug=True, port=5001)
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
