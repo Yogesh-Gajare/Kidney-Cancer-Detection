@@ -101,7 +101,8 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = 'your_secret_key'  # Change this in production!
 
 # MongoDB connection (for user authentication)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/kidneyDB"
+#app.config["MONGO_URI"] = "mongodb://localhost:27017/kidneyDB"
+app.config["MONGO_URI"] = "mongodb://<windows_host_ip>:27017/kidneyDB"
 mongo = PyMongo(app)
 
 # Directories and paths
