@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Cancer Detection - Prediction Result</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', _external=True) }}">
+
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>KIDNEY</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('open') }}">Home</a></li>
+                    <li><a href="{{ url_for('upload') }}">Upload</a></li>
+                    <li><a href="{{ url_for('cnnprediction') }}">Prediction</a></li>
+                    <li><a href="#">Performance_Analysis</a></li>
+                    <li><a href="{{ url_for('login') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <h2>Prediction Result</h2>
+
+        <!-- Form data will be displayed here -->
+        <div id="formDataDisplay">
+            <h3>Entered Data:</h3>
+            <ul>
+                <li><strong>AGE:</strong> <span id="ageDisplay"></span></li>
+                <li><strong>BLOOD PRESSURE:</strong> <span id="bloodPressureDisplay"></span></li>
+                <li><strong>ALBUMIN:</strong> <span id="albuminDisplay"></span></li>
+                <li><strong>SUGAR:</strong> <span id="sugarDisplay"></span></li>
+                <li><strong>RED BLOOD CELLS:</strong> <span id="redBloodCellsDisplay"></span></li>
+                <li><strong>PUS CELL:</strong> <span id="pusCellDisplay"></span></li>
+                <li><strong>BACTERIA:</strong> <span id="bacteriaDisplay"></span></li>
+                <li><strong>BLOOD GLUCOSE:</strong> <span id="bloodGlucoseDisplay"></span></li>
+                <li><strong>SERUM CREATININE:</strong> <span id="serumCreatinineDisplay"></span></li>
+                <li><strong>POTASSIUM:</strong> <span id="potassiumDisplay"></span></li>
+                <li><strong>ANAEMIA:</strong> <span id="anaemiaDisplay"></span></li>
+                <!-- <li><strong>HEMOGLOBIN :</strong> <span id="hemoglobinDisplay"></span></li> -->
+            </ul>
+        </div>
+
+        <!-- Prediction Result -->
+        <div id="predictionResult">
+            <h3>Prediction Result:</h3>
+            <p id="predictionText">The result will be displayed here.</p>
+        </div>
+    </main>
+
+    <!-- <script src="annpredict.js"></script> -->
+    <script src="{{ url_for('static', filename='annpredict.js') }}"></script>
+
+</body>
+</html>

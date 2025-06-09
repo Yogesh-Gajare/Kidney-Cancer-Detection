@@ -1,0 +1,137 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    color: #212020;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  /* Header Section */
+  header {
+    background-color: #3b6be2;
+    padding: 20px 50px;
+    color: #f6f5f8dd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f6f5f8dd;
+  }
+  
+  nav .menu a {
+    text-decoration: none;
+    color: #f6f5f8dd;
+    margin-left: 20px;
+    font-size: 1rem;
+  }
+  
+  nav .menu a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Hero Section (Landing Page) */
+  .hero-section {
+    position: relative;
+    height: 90vh;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .hero-section .content {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #f7e9e9;
+  }
+  
+  .hero-section p {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #fff;
+  }
+  
+  .hero-section .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .hero-section .background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+  
+  /* Upload Section (File Upload Page) */
+  .upload-section {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    margin: 5vh auto;
+  }
+  
+  .upload-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #111;
+  }
+  
+  .upload-section input[type="file"] {
+    margin: 15px 0;
+  }
+  
+  .upload-section button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .upload-section button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Footer Section */
+  footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #222;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
